@@ -10,7 +10,7 @@
 
 <script lang='ts'>
 // lang = 'ts' 注意设定
-import { Vue, Component } from "vue-property-decorator";
+import { Vue, Component, Watch } from "vue-property-decorator";
 import HelloWorld from "@/components/HelloWorld.vue";
 
 // 注册组件
@@ -30,12 +30,13 @@ export default class Home extends Vue {
 
   // computed 计算属性
   private get computedMsg(): string {
-    return "computed" + this.msg * 2;
+    return "computed" + this.msg;
   }
 
   // method 定义函数
   private clickPhoto(): any {
-    alert(`点击图片触发了 clickPhoto 函数`);
+    this.msg = this.msg * 2;
+    alert(`点击图片触发了 clickPhoto 函数,msg值*2`);
   }
 
   private propsMsg: string = "propsMsg的值";
@@ -45,6 +46,15 @@ export default class Home extends Vue {
   // 子组件emit传过来的值
   private fatherFn(value: string) {
     console.info(value);
+  }
+
+  // watch 监听 - 当msg有变动时，触发后面的函数  （开启深度监听）
+  // immediate - 首次绑定监听时不会触发函数，开始 immediate 后首次绑定也会触发函数
+  @Watch("msg", { deep: true, immediate: true }) private watchMsg(
+    newVal: number,
+    oldVal: number
+  ) {
+    console.info(newVal, oldVal);
   }
 }
 </script>
