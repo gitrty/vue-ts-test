@@ -4,6 +4,7 @@
     <HelloWorld :msg="propsMsg" :title="title" @emit-data="fatherFn" />
     <div>私有变量：{{msg}}</div>
     <div>计算属性：{{computedMsg}}</div>
+    <button @click="promiseFun">触发执行Primose的函数</button>
   </div>
 </template>
 
@@ -55,6 +56,14 @@ export default class Home extends Vue {
     oldVal: number
   ) {
     console.info(newVal, oldVal);
+  }
+
+  // 在函数中执行 Promise，并指定返回值类型
+  private async promiseFun(): Promise<void> {
+    const data = await new Promise((res, rej) => {
+      res("Promise数据");
+    });
+    console.info(data);
   }
 }
 </script>
