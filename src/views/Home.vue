@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <img alt="Vue logo" src="../assets/logo.png" @click="clickPhoto" />
-    <HelloWorld msg="Welcome to Your Vue.js App" />
+    <HelloWorld :msg="propsMsg" :title="title" @emit-data="fatherFn" />
     <div>私有变量：{{msg}}</div>
     <div>计算属性：{{computedMsg}}</div>
   </div>
@@ -24,18 +24,27 @@ export default class Home extends Vue {
   private msg: number = 100;
 
   // 生命周期函数
-  private mounted() {
+  private mounted(): void {
     console.info("mounted生命周期");
   }
 
   // computed 计算属性
-  private get computedMsg() {
+  private get computedMsg(): string {
     return "computed" + this.msg * 2;
   }
 
   // method 定义函数
-  private clickPhoto() {
+  private clickPhoto(): any {
     alert(`点击图片触发了 clickPhoto 函数`);
+  }
+
+  private propsMsg: string = "propsMsg的值";
+
+  private title: string = "我是标题";
+
+  // 子组件emit传过来的值
+  private fatherFn(value: string) {
+    console.info(value);
   }
 }
 </script>
